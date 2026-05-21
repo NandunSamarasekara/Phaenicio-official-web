@@ -1,6 +1,6 @@
 import nandunImg from '../assets/nandun.jpg';
 import hasithaImg from '../assets/hasitha.jpg';
-import { FiMail, FiMessageCircle } from 'react-icons/fi';
+import { FiMail, FiMessageCircle, FiLinkedin, FiCompass } from 'react-icons/fi';
 
 const Contact = () => {
   const founders = [
@@ -26,85 +26,118 @@ const Contact = () => {
         <div className="badge">
           Direct Line to the Founders
         </div>
-        <h1 className="text-5xl leading-[1.08] mb-5 max-md:text-4xl">
-          Get in <span className="text-primary">Touch.</span>
+        <h1 className="text-5xl font-extrabold tracking-tight leading-[1.08] mb-5 text-text-h">
+          Get in <span className="bg-gradient-to-r from-accent to-indigo-600 bg-clip-text text-transparent">Touch.</span>
         </h1>
         <p className="page-lead">
-          We're always open to collaboration, feedback, and inquiries about the Phaenicio ecosystem and Zosterix.
+          We are always open to research collaborations, academic feedback, and institutional inquiries about Zosterix.
         </p>
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-14 text-left items-start">
-        <section className="flex flex-col gap-10">
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold mb-2">Co-Founders</h2>
-            <p className="text-text">Direct access to the architects behind Phaenicio.</p>
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 text-left items-start">
+        {/* Founders Cards */}
+        <section className="flex flex-col gap-8">
+          <div>
+            <h2 className="text-xl font-bold mb-2 text-text-h">Co-Founders</h2>
+            <p className="text-sm text-text leading-relaxed">Direct access to the system architects behind Phaenicio.</p>
           </div>
+          
           <div className="flex flex-col gap-6">
             {founders.map((founder, index) => (
-              <div key={index} className="surface-panel grid grid-cols-[92px_1fr] max-md:grid-cols-1 gap-6 p-6 rounded-[24px] items-center hover:translate-x-1.5 hover:shadow-[0_16px_32px_rgba(15,23,42,0.12)] group">
-                <div className="w-20 h-20 rounded-xl overflow-hidden shadow-lg group-hover:scale-105 transition-transform duration-500">
+              <div 
+                key={index} 
+                className="premium-card p-6 flex items-center gap-6 max-sm:flex-col max-sm:items-start max-sm:gap-4 bg-white"
+              >
+                <div className="w-20 h-20 rounded-xl overflow-hidden shadow-md border border-slate-100 shrink-0">
                   <img
                     src={founder.image}
                     alt={founder.name}
+                    className="w-full h-full object-cover"
                   />
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold mb-1 text-text-h">{founder.name}</h3>
-                  <p className="text-text text-sm mb-4 font-medium">{founder.role}</p>
-                  <a href={`mailto:${founder.email}`} className="flex items-center gap-2 text-primary hover:text-primary-hover transition-colors font-mono text-sm underline underline-offset-4">
-                    <FiMail /> {founder.email}
-                  </a>
+                <div className="flex-grow">
+                  <h3 className="text-lg font-bold mb-1 text-text-h">{founder.name}</h3>
+                  <p className="text-xs text-text-muted mb-4 font-semibold font-mono uppercase tracking-wider">{founder.role}</p>
+                  
+                  <div className="flex flex-wrap gap-4 text-xs font-mono">
+                    <a 
+                      href={`mailto:${founder.email}`} 
+                      className="flex items-center gap-1.5 text-text hover:text-accent transition-colors underline"
+                    >
+                      <FiMail /> <span>Email Direct</span>
+                    </a>
+                    <a 
+                      href={founder.linkedin} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="flex items-center gap-1.5 text-text hover:text-accent transition-colors underline"
+                    >
+                      <FiLinkedin /> <span>LinkedIn</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
+
+          <div className="p-6 bg-slate-50 border border-slate-200 rounded-2xl flex gap-4 items-start">
+            <FiCompass className="text-xl text-accent shrink-0 mt-0.5" />
+            <div>
+              <h4 className="text-xs font-bold text-text-h uppercase tracking-wide mb-1 font-mono">Dual-Node Communication</h4>
+              <p className="text-xs text-text leading-relaxed">
+                Our founders actively divide oversight between Eastern Standard Time (EST) and Sri Lanka Standard Time (SLST). Message routing is optimized automatically.
+              </p>
+            </div>
+          </div>
         </section>
 
+        {/* Message Form */}
         <section>
-          <div className="surface-panel p-10 rounded-[30px] max-md:p-7 shadow-[0_18px_38px_rgba(15,23,42,0.12)]">
-            <div className="mb-9">
-              <div className="w-11 h-11 bg-primary/10 text-primary rounded-xl flex items-center justify-center text-xl mb-5"><FiMessageCircle /></div>
-              <h2 className="text-2xl font-semibold mb-2">Send a Message</h2>
-              <p className="text-text">For partnership proposals, media requests, or support.</p>
+          <div className="premium-card p-10 max-md:p-6 bg-white">
+            <div className="mb-8">
+              <div className="w-10 h-10 bg-slate-50 border border-slate-200 text-accent rounded-xl flex items-center justify-center text-xl mb-4">
+                <FiMessageCircle />
+              </div>
+              <h2 className="text-2xl font-bold text-text-h mb-1">Send a Message</h2>
+              <p className="text-sm text-text">For partnership proposals, compute nodes or generic inquiry.</p>
             </div>
 
             <form
-              className="flex flex-col gap-6"
+              className="flex flex-col gap-5"
               onSubmit={(e) => e.preventDefault()}
             >
-              <div className="grid grid-cols-2 gap-6 max-md:grid-cols-1">
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="name" className="text-xs font-semibold uppercase tracking-[0.08em] text-text-h/50">Full Name</label>
+              <div className="grid grid-cols-2 gap-5 max-sm:grid-cols-1">
+                <div>
+                  <label htmlFor="name" className="form-label">Full Name</label>
                   <input
                     type="text"
                     id="name"
                     name="name"
-                    className="w-full py-3 bg-transparent border-b border-border focus:outline-none focus:border-primary focus:bg-primary/5 transition-all px-2 placeholder:text-text/20"
+                    className="form-input"
                     placeholder="John Doe"
                     required
                   />
                 </div>
 
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="email" className="text-xs font-semibold uppercase tracking-[0.08em] text-text-h/50">Email Address</label>
+                <div>
+                  <label htmlFor="email" className="form-label">Email Address</label>
                   <input
                     type="email"
                     id="email"
                     name="email"
-                    className="w-full py-3 bg-transparent border-b border-border focus:outline-none focus:border-primary focus:bg-primary/5 transition-all px-2 placeholder:text-text/20"
+                    className="form-input"
                     placeholder="john@example.com"
                     required
                   />
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2">
-                <label htmlFor="subject" className="text-xs font-semibold uppercase tracking-[0.08em] text-text-h/50">Subject</label>
+              <div>
+                <label htmlFor="subject" className="form-label">Subject</label>
                 <select
                   id="subject"
                   name="subject"
-                  className="w-full py-3 bg-transparent border-b border-border focus:outline-none focus:border-primary focus:bg-primary/5 transition-all px-2"
+                  className="form-input"
                   required
                 >
                   <option value="">Select a subject</option>
@@ -116,18 +149,21 @@ const Contact = () => {
                 </select>
               </div>
 
-              <div className="flex flex-col gap-2">
-                <label htmlFor="message" className="text-xs font-semibold uppercase tracking-[0.08em] text-text-h/50">Message</label>
+              <div>
+                <label htmlFor="message" className="form-label">Message</label>
                 <textarea
                   id="message"
                   name="message"
-                  className="w-full py-3 bg-transparent border-b border-border focus:outline-none focus:border-primary focus:bg-primary/5 transition-all px-2 placeholder:text-text/20 min-h-[140px]"
+                  className="form-input min-h-[140px] resize-y"
                   placeholder="How can we help you today?"
                   required
                 ></textarea>
               </div>
 
-              <button type="submit" className="w-full py-4 bg-primary text-white rounded-xl font-semibold text-base transition-all hover:bg-primary-hover hover:-translate-y-0.5 shadow-lg hover:shadow-xl hover:shadow-primary/20">
+              <button 
+                type="submit" 
+                className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white rounded-lg font-semibold text-sm transition-all duration-200 active:scale-[0.98] shadow-sm hover:shadow-md cursor-pointer"
+              >
                 Send Inquiry
               </button>
             </form>
@@ -135,9 +171,9 @@ const Contact = () => {
         </section>
       </div>
 
-      <footer className="mt-24 pt-9 border-t border-border flex justify-between items-center text-[10px] font-mono tracking-[0.18em] text-text/50 uppercase">
+      <footer className="mt-20 pt-8 border-t border-slate-200 flex justify-between items-center text-[10px] font-mono tracking-widest text-text-muted uppercase">
         <div>PHAENICIO-COMMUNICATIONS</div>
-        <div>- 2026 -</div>
+        <div>SECURE CHANNEL</div>
       </footer>
     </div>
   );

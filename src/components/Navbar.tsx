@@ -1,29 +1,49 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { FiMenu, FiX, FiChevronDown } from 'react-icons/fi';
+import { FiMenu, FiX, FiChevronDown, FiGlobe, FiBook, FiGithub } from 'react-icons/fi';
 import logoLong from '../assets/phaenicio-long.svg';
 import logoShort from '../assets/phaenicio.svg';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
 
-  return (
-    <nav className="fixed top-0 left-0 w-full h-[78px] flex items-center justify-between px-[5%] z-50 fade-in overflow-hidden border-b border-white/70 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
-      <div className="absolute inset-0 bg-gradient-to-r from-[#2f343b] via-[#c9ced6] to-[#ffffff]"></div>
-      <div className="absolute inset-0 opacity-20 bg-[repeating-linear-gradient(90deg,rgba(255,255,255,0.18)_0px,rgba(255,255,255,0.18)_1px,transparent_1px,transparent_26px),repeating-linear-gradient(0deg,rgba(17,24,39,0.08)_0px,rgba(17,24,39,0.08)_1px,transparent_1px,transparent_20px)]"></div>
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(15,23,42,0.22)_0%,rgba(15,23,42,0.06)_38%,rgba(255,255,255,0.08)_100%)]"></div>
+  // Close dropdown on click outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
+  return (
+    <nav className="fixed top-0 left-0 w-full h-[78px] flex items-center justify-between px-[5%] z-50 bg-white/75 backdrop-blur-md border-b border-slate-200/60 shadow-[0_2px_15px_-3px_rgba(15,23,42,0.04)] transition-all duration-300">
       <Link to="/" className="flex items-center relative z-10" onClick={closeMenu}>
         <picture>
           <source media="(max-width: 768px)" srcSet={logoShort} />
-          <img src={logoLong} alt="Phaenicio" className="h-[64px] w-auto transition-all duration-300 hover:scale-[1.01] hover:opacity-95 max-md:h-[56px] drop-shadow-[0_4px_8px_rgba(15,23,42,0.24)]" />
+          <img 
+            src={logoLong} 
+            alt="Phaenicio" 
+            className="h-[52px] w-auto transition-all duration-300 hover:opacity-90 max-md:h-[42px] filter drop-shadow-sm" 
+          />
         </picture>
       </Link>
 
-      <div id="mobile-navigation" className={`flex gap-6 items-center relative z-10 max-md:fixed max-md:top-[78px] max-md:left-0 max-md:w-full max-md:h-[calc(100vh-78px)] max-md:bg-[linear-gradient(140deg,#2f343b_0%,#d6dae0_55%,#ffffff_100%)] max-md:backdrop-blur-sm max-md:flex-col max-md:justify-center max-md:gap-9 max-md:transition-transform max-md:duration-300 ${isOpen ? 'max-md:translate-x-0' : 'max-md:translate-x-full'}`}>
+      <div 
+        id="mobile-navigation" 
+        className={`flex gap-8 items-center relative z-10 
+          max-md:fixed max-md:top-[78px] max-md:left-0 max-md:w-full max-md:h-[calc(100vh-78px)] 
+          max-md:bg-white/98 max-md:backdrop-blur-xl max-md:flex-col max-md:justify-center 
+          max-md:gap-8 max-md:transition-all max-md:duration-300 max-md:ease-out
+          ${isOpen ? 'max-md:translate-x-0 max-md:opacity-100' : 'max-md:translate-x-full max-md:opacity-0 pointer-events-none md:pointer-events-auto'}`}
+      >
         {[
           { to: "/", label: "Home", end: true },
           { to: "/about", label: "About" },
@@ -35,7 +55,12 @@ const Navbar = () => {
             key={link.to}
             to={link.to} 
             end={link.end}
-            className={({ isActive }) => `text-sm tracking-wide font-semibold transition-colors duration-200 max-md:text-xl ${isActive ? 'text-[#0b1020]' : 'text-[#273245] hover:text-[#0b1020]'}`}
+            className={({ isActive }) => `
+              text-sm tracking-wide font-semibold transition-all duration-200 relative py-2
+              max-md:text-xl
+              ${isActive 
+                ? 'text-accent font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-accent' 
+                : 'text-text hover:text-text-h after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-accent hover:after:w-full after:transition-all after:duration-200'}`}
             onClick={closeMenu}
           >
             {link.label}
@@ -46,27 +71,65 @@ const Navbar = () => {
           href="https://github.com/phaenicio" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="text-sm tracking-wide font-semibold transition-colors duration-200 text-[#273245] hover:text-[#0b1020] max-md:text-xl"
+          className="text-sm tracking-wide font-semibold transition-colors duration-200 text-text hover:text-accent flex items-center gap-1.5 max-md:text-xl"
           onClick={closeMenu}
         >
-          GitHub
+          <FiGithub className="text-base" />
+          <span>GitHub</span>
         </a>
 
-        <a href="#" className="flex items-center bg-primary text-white no-underline text-sm font-semibold rounded-lg overflow-hidden transition-all duration-200 border border-white/10 h-10 cursor-pointer hover:bg-primary-hover hover:-translate-y-0.5 hover:shadow-[0_8px_16px_rgba(30,58,138,0.22)] max-md:h-[48px] max-md:text-base max-md:w-4/5 max-md:justify-center" onClick={closeMenu}>
-          <span className="px-3.5 flex items-center h-full">Try Zosterix</span>
-          <span className="w-px h-5 bg-white/15"></span>
-          <span className="px-2.5 flex items-center justify-center h-full text-base">
-            <FiChevronDown />
-          </span>
-        </a>
+        {/* Try Zosterix Dropdown */}
+        <div className="relative" ref={dropdownRef}>
+          <button 
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="flex items-center gap-1 bg-primary text-white text-sm font-semibold rounded-lg px-4 h-10 transition-all duration-200 hover:bg-primary-hover active:scale-[0.98] shadow-sm hover:shadow-[0_8px_16px_rgba(10,15,45,0.15)] max-md:h-[48px] max-md:text-base max-md:w-[240px] max-md:justify-center cursor-pointer"
+          >
+            <span>Try Zosterix</span>
+            <FiChevronDown className={`transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+          </button>
+
+          {isDropdownOpen && (
+            <div className="absolute right-0 mt-2 w-64 bg-white border border-slate-200 rounded-xl shadow-xl py-2 z-50 animate-fade-in max-md:relative max-md:right-auto max-md:left-0 max-md:w-[240px] max-md:mt-4 max-md:border-slate-100 max-md:shadow-none">
+              <a 
+                href="https://zosterix.com" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex items-center gap-3 px-4 py-3 text-sm text-text-h hover:bg-slate-50 transition-colors"
+                onClick={() => { setIsDropdownOpen(false); closeMenu(); }}
+              >
+                <FiGlobe className="text-accent text-lg" />
+                <div className="text-left">
+                  <p className="font-semibold m-0">Zosterix Web Portal</p>
+                  <p className="text-xs text-text-muted m-0">Research networking hub</p>
+                </div>
+              </a>
+              <Link 
+                to="/user-guide" 
+                className="flex items-center gap-3 px-4 py-3 text-sm text-text-h hover:bg-slate-50 transition-colors"
+                onClick={() => { setIsDropdownOpen(false); closeMenu(); }}
+              >
+                <FiBook className="text-accent text-lg" />
+                <div className="text-left">
+                  <p className="font-semibold m-0">User Documentation</p>
+                  <p className="text-xs text-text-muted m-0">Quick starts & guides</p>
+                </div>
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
 
-      <button className="hidden max-md:block relative z-10 bg-none border-none text-[#0b1020] text-2xl cursor-pointer" onClick={toggleMenu} aria-label="Toggle menu" aria-expanded={isOpen} aria-controls="mobile-navigation">
-        {isOpen ? <FiX /> : <FiMenu />}
+      <button 
+        className="hidden max-md:flex items-center justify-center relative z-10 bg-slate-100/80 hover:bg-slate-200/80 text-text-h w-10 h-10 rounded-lg cursor-pointer transition-colors" 
+        onClick={toggleMenu} 
+        aria-label="Toggle menu" 
+        aria-expanded={isOpen} 
+        aria-controls="mobile-navigation"
+      >
+        {isOpen ? <FiX className="text-xl" /> : <FiMenu className="text-xl" />}
       </button>
     </nav>
   );
 };
 
 export default Navbar;
-
