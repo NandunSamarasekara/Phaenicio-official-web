@@ -1,98 +1,215 @@
 import { Link } from 'react-router-dom';
-import logo from '../assets/phaenicio.svg';
+// import logo from '../assets/phaenicio.svg';
 import { FiArrowRight, FiActivity, FiCpu, FiCompass, FiBookOpen, FiGlobe, FiGrid } from 'react-icons/fi';
+
+const metrics = [
+  { value: "1,402", label: "Active Nodes" },
+  { value: "99.9%", label: "Uptime SLA" },
+  { value: "42TB/s", label: "Data Velocity" },
+];
 
 const Home = () => {
   return (
     <div className="flex flex-col fade-in pt-[78px]">
+      {/* Custom Styles for Hero Animations */}
+      <style>{`
+        .hero-grid {
+          background-image: linear-gradient(to right, rgb(226 232 240 / 0.6) 1px, transparent 1px), 
+                            linear-gradient(to bottom, rgb(226 232 240 / 0.6) 1px, transparent 1px);
+          background-size: 56px 56px;
+          mask-image: radial-gradient(circle at 50% 28%, black, transparent 75%);
+          -webkit-mask-image: radial-gradient(circle at 50% 28%, black, transparent 75%);
+        }
+        @keyframes pulse-dot {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(1.5); }
+        }
+        .animate-pulse-dot {
+          animation: pulse-dot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .animate-spin-slow {
+          animation: spin 20s linear infinite;
+        }
+        .animate-spin-reverse {
+          animation: spin 25s linear infinite reverse;
+        }
+        @keyframes scan-line {
+          0% { transform: translateY(-100%); }
+          100% { transform: translateY(100%); }
+        }
+        .scanner {
+          animation: scan-line 3s linear infinite;
+        }
+      `}</style>
+
       {/* Hero Section */}
-      <section className="relative pt-16 pb-24 px-[5%] overflow-hidden border-b border-slate-200">
+      <section className="relative pt-16 pb-24 px-[5%] overflow-hidden border-b border-slate-200 bg-white">
+        <div className="absolute inset-0 pointer-events-none hero-grid z-0"></div>
         <div className="absolute top-0 right-0 w-[45%] h-[70%] bg-gradient-to-bl from-accent/5 via-transparent to-transparent blur-3xl pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto grid grid-cols-12 gap-12 items-center">
+        
+        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-12 gap-12 items-center">
+          
+          {/* Left Column: Typography & CTAs */}
           <div className="col-span-7 max-lg:col-span-12 text-left">
-            <div className="badge">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-xs font-semibold text-text-h mb-6">
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse-dot"></span>
               Global Compute Infrastructure
             </div>
-            <h1 className="font-display text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.08] mb-6 text-text-h">
+            
+            <h1 className="font-display text-5xl md:text-6xl lg:text-[68px] font-extrabold tracking-tight leading-[1.05] mb-6 text-slate-950 text-balance">
               Engineering the <br />
               <span className="bg-gradient-to-r from-accent via-indigo-600 to-primary bg-clip-text text-transparent">
                 Future of Knowledge.
               </span>
             </h1>
-            <p className="text-lg text-text leading-relaxed mb-8 max-w-xl">
-              Phaenicio builds precision-driven digital infrastructure. We create specialized orchestration platforms that empower researchers, universities, and scientists to cross institutional boundaries and accelerate human discovery.
+            
+            <p className="text-lg text-slate-600 leading-relaxed mb-8 max-w-xl text-pretty">
+              Phaenicio builds precision-driven digital infrastructure. We create specialized orchestration platforms that empower researchers, universities, and scientists to cross boundaries and accelerate discovery.
             </p>
+            
             <div className="flex flex-wrap gap-4">
               <a 
                 href="#zosterix" 
-                className="px-6 py-3.5 bg-primary text-white rounded-lg font-semibold transition-all duration-300 hover:bg-primary-hover active:scale-[0.98] shadow-md hover:shadow-lg hover:shadow-primary/20 flex items-center gap-2 group"
+                className="px-6 py-3.5 bg-slate-950 text-white rounded-full font-semibold transition-all duration-300 hover:bg-slate-800 shadow-lg shadow-slate-950/15 flex items-center gap-2 group"
               >
                 <span>Discover Zosterix</span>
                 <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
               </a>
               <Link 
                 to="/about" 
-                className="px-6 py-3.5 bg-white border border-slate-200 hover:border-slate-300 text-text-h rounded-lg font-semibold transition-all duration-200 hover:bg-slate-50 flex items-center gap-2"
+                className="px-6 py-3.5 bg-white border border-slate-200 hover:border-slate-300 text-slate-800 rounded-full font-semibold transition-all duration-200 shadow-sm shadow-slate-200/50 hover:bg-slate-50 flex items-center gap-2"
               >
                 Our Mission
               </Link>
             </div>
+
+            <div className="mt-12 grid w-full max-w-xl grid-cols-3 gap-4">
+              {metrics.map((metric, i) => (
+                <div key={i} className="rounded-2xl border border-slate-200/80 bg-white/60 p-4 text-left shadow-sm shadow-slate-200/40 backdrop-blur-sm">
+                  <p className="text-2xl font-bold tracking-tight text-slate-950">{metric.value}</p>
+                  <p className="mt-1 text-xs font-medium leading-snug text-slate-500">{metric.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="col-span-5 max-lg:col-span-12 flex justify-center">
-            {/* Unique, premium glassmorphic visual panel centered on the brand logo */}
-            <div className="relative w-full max-w-[420px] aspect-square rounded-[32px] border border-white/60 bg-white/30 shadow-premium flex items-center justify-center p-8 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:shadow-premium-hover group overflow-hidden">
-              {/* Dynamic glowing background circles */}
-              <div className="absolute -inset-10 bg-gradient-to-tr from-accent/10 via-indigo-600/5 to-transparent blur-3xl pointer-events-none group-hover:scale-105 transition-transform duration-1000"></div>
-              
-              {/* Live SVG Background Animation */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <linearGradient id="orbit-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.4" />
-                    <stop offset="50%" stopColor="#6366f1" stopOpacity="0.1" />
-                    <stop offset="100%" stopColor="#0a0f2d" stopOpacity="0" />
-                  </linearGradient>
-                  <linearGradient id="glow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#3b82f6" />
-                    <stop offset="100%" stopColor="#6366f1" />
-                  </linearGradient>
-                </defs>
-                
-                {/* Clean, minimalist orbital rings around the logo */}
-                <circle cx="160" cy="160" r="115" stroke="rgba(226, 232, 240, 0.4)" strokeWidth="1" />
-                <circle cx="160" cy="160" r="85" stroke="rgba(59, 130, 246, 0.15)" strokeWidth="1.5" strokeDasharray="4 8" />
-                <circle cx="160" cy="160" r="55" stroke="rgba(99, 102, 241, 0.1)" strokeWidth="1" />
-                
-                {/* Arc tracks for animated flow */}
-                <path d="M 45 160 A 115 115 0 0 1 275 160" stroke="url(#orbit-grad)" strokeWidth="2" strokeLinecap="round" />
-                <path d="M 105 160 A 55 55 0 0 0 215 160" stroke="url(#orbit-grad)" strokeWidth="1.5" strokeLinecap="round" />
-                
-                {/* Orbiting particles/nodes (CSS and SVG animated) */}
-                <circle cx="0" cy="0" r="5" fill="url(#glow-grad)" className="filter drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]">
-                  <animateMotion dur="7s" repeatCount="indefinite" path="M 160 45 A 115 115 0 1 1 159.9 45 Z" />
-                </circle>
-                
-                <circle cx="0" cy="0" r="4" fill="#3b82f6" className="filter drop-shadow-[0_0_6px_rgba(59,130,246,0.4)]">
-                  <animateMotion dur="10s" repeatCount="indefinite" path="M 160 75 A 85 85 0 1 0 160.1 75 Z" />
-                </circle>
-                
-                <circle cx="0" cy="0" r="3" fill="#6366f1">
-                  <animateMotion dur="5s" repeatCount="indefinite" path="M 160 105 A 55 55 0 1 1 159.9 105 Z" />
-                </circle>
+          {/* Right Column: Unique Radial Core Dashboard */}
+          <div className="col-span-5 max-lg:col-span-12 flex justify-center w-full relative">
+            <div className="relative w-full max-w-[520px]" aria-label="Animated central core network">
+              {/* Sleek Outer Bezel */}
+              <div className="relative rounded-[2rem] border border-slate-200 bg-white p-2 shadow-2xl shadow-slate-300/60">
+                {/* Deep Dark Tech Interface */}
+                <div className="rounded-[1.5rem] bg-slate-950 overflow-hidden relative shadow-inner">
+                  
+                  {/* Ambient Glows */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] bg-accent/20 blur-[60px] rounded-full pointer-events-none"></div>
+                  
+                  {/* Dashboard Header */}
+                  <div className="relative z-10 flex items-center justify-between border-b border-white/10 px-5 py-4 bg-slate-950/50 backdrop-blur-md">
+                    <div className="flex items-center gap-2">
+                      <FiActivity className="text-accent text-lg" />
+                      <span className="text-sm font-mono font-bold tracking-wider text-slate-200">ZOSTERIX_CORE</span>
+                    </div>
+                    <div className="flex items-center gap-2 px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20">
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot"></div>
+                      <span className="text-[10px] font-mono font-bold text-emerald-400">SYS.ONLINE</span>
+                    </div>
+                  </div>
 
-                {/* Sub-connections */}
-                <line x1="160" y1="45" x2="160" y2="75" stroke="rgba(59, 130, 246, 0.06)" strokeWidth="1" />
-                <line x1="45" y1="160" x2="105" y2="160" stroke="rgba(59, 130, 246, 0.06)" strokeWidth="1" />
-              </svg>
+                  {/* Main Network Visual Area */}
+                  <div className="relative h-[280px] w-full flex items-center justify-center p-4">
+                    
+                    {/* SVG Radial Topology */}
+                    <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 280">
+                      <defs>
+                        <linearGradient id="link-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.8" />
+                          <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.1" />
+                        </linearGradient>
+                      </defs>
 
-              {/* Centered Brand Logo (fully visible and prominent) */}
-              <div className="relative z-10 w-full max-w-[240px] flex justify-center items-center p-6 bg-white/40 rounded-2xl border border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.02)] backdrop-blur-sm group-hover:scale-[1.02] transition-transform duration-500">
-                <img 
-                  src={logo} 
-                  alt="Phaenicio Logo" 
-                  className="w-full h-auto drop-shadow-[0_12px_24px_rgba(15,23,42,0.16)] select-none pointer-events-none" 
-                />
+                      {/* Rotating Grid/Radar Rings */}
+                      <g className="origin-center animate-spin-slow" style={{ transformOrigin: '200px 140px' }}>
+                        <circle cx="200" cy="140" r="80" stroke="rgba(59,130,246,0.15)" strokeWidth="1" fill="none" strokeDasharray="4 6" />
+                        <circle cx="200" cy="140" r="110" stroke="rgba(99,102,241,0.1)" strokeWidth="1" fill="none" />
+                      </g>
+
+                      <g className="origin-center animate-spin-reverse" style={{ transformOrigin: '200px 140px' }}>
+                        <circle cx="200" cy="140" r="50" stroke="rgba(59,130,246,0.3)" strokeWidth="1" fill="none" strokeDasharray="10 4" />
+                      </g>
+
+                      {/* Connection Lines to Satellites */}
+                      <path d="M200 140 L90 70" stroke="rgba(148,163,184,0.15)" strokeWidth="1.5" />
+                      <path d="M200 140 L310 80" stroke="rgba(148,163,184,0.15)" strokeWidth="1.5" />
+                      <path d="M200 140 L110 220" stroke="rgba(148,163,184,0.15)" strokeWidth="1.5" />
+                      <path d="M200 140 L290 200" stroke="rgba(148,163,184,0.15)" strokeWidth="1.5" />
+
+                      {/* Active Data Streams (Animated Stroke) */}
+                      <path d="M90 70 L200 140" stroke="#3b82f6" strokeWidth="2" fill="none" strokeDasharray="130" strokeDashoffset="130">
+                        <animate attributeName="stroke-dashoffset" values="130;0;130" dur="2.5s" repeatCount="indefinite" />
+                      </path>
+                      <path d="M310 80 L200 140" stroke="#10b981" strokeWidth="2" fill="none" strokeDasharray="130" strokeDashoffset="130">
+                        <animate attributeName="stroke-dashoffset" values="130;0;130" dur="3s" repeatCount="indefinite" />
+                      </path>
+                      <path d="M110 220 L200 140" stroke="#8b5cf6" strokeWidth="2" fill="none" strokeDasharray="120" strokeDashoffset="120">
+                        <animate attributeName="stroke-dashoffset" values="120;0;120" dur="2s" repeatCount="indefinite" />
+                      </path>
+
+                      {/* Satellite Nodes */}
+                      <circle cx="90" cy="70" r="6" fill="#3b82f6" className="shadow-[0_0_10px_#3b82f6]" />
+                      <circle cx="90" cy="70" r="12" stroke="rgba(59,130,246,0.3)" strokeWidth="1" fill="none" />
+                      
+                      <circle cx="310" cy="80" r="5" fill="#10b981" />
+                      <circle cx="310" cy="80" r="10" stroke="rgba(16,185,129,0.3)" strokeWidth="1" fill="none" />
+                      
+                      <circle cx="110" cy="220" r="7" fill="#8b5cf6" />
+                      
+                      <circle cx="290" cy="200" r="4" fill="#64748b" />
+
+                      {/* Central Core */}
+                      <circle cx="200" cy="140" r="22" fill="url(#link-grad)" />
+                      <circle cx="200" cy="140" r="12" fill="#0f172a" />
+                      <circle cx="200" cy="140" r="4" fill="#3b82f6" className="animate-pulse-dot" />
+
+                      {/* Data Packets */}
+                      <circle r="3" fill="#fff" filter="drop-shadow(0 0 2px rgba(255,255,255,0.8))">
+                        <animateMotion dur="2.5s" repeatCount="indefinite" path="M90 70 L200 140" />
+                      </circle>
+                      <circle r="2" fill="#fff">
+                        <animateMotion dur="3s" repeatCount="indefinite" path="M310 80 L200 140" />
+                      </circle>
+                    </svg>
+
+                    {/* HUD UI Elements over the graphic */}
+                    <div className="absolute inset-x-5 bottom-4 flex justify-between items-end pointer-events-none">
+                      {/* Left side terminal output */}
+                      <div className="bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-lg p-2.5 text-[9px] font-mono leading-relaxed">
+                        <p className="text-slate-400">&gt; syncing_nodes_global</p>
+                        <p className="text-emerald-400">&gt; hash: 0x8F2A...9C</p>
+                        <p className="text-slate-400">&gt; validation: <span className="text-white">pass</span></p>
+                      </div>
+
+                      {/* Right side telemetry bars */}
+                      <div className="flex flex-col gap-2 bg-slate-900/60 backdrop-blur-md border border-slate-700/50 rounded-lg p-2.5">
+                        <div className="flex items-center gap-3">
+                          <span className="text-[8px] font-mono text-slate-500 w-6">ING</span>
+                          <div className="w-16 h-1 bg-slate-800 rounded-full overflow-hidden">
+                            <div className="h-full bg-accent w-[85%]"></div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-[8px] font-mono text-slate-500 w-6">EGR</span>
+                          <div className="w-16 h-1 bg-slate-800 rounded-full overflow-hidden">
+                            <div className="h-full bg-purple-500 w-[60%]"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Subtle Scanline Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent h-8 w-full opacity-50 scanner pointer-events-none"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -111,7 +228,6 @@ const Home = () => {
           </div>
 
           <div className="grid grid-cols-12 gap-8 items-stretch mb-12">
-            {/* Primary spotlight column */}
             <div className="col-span-7 max-lg:col-span-12 premium-card p-10 flex flex-col justify-between">
               <div>
                 <span className="text-accent text-3xl mb-6 block"><FiGlobe /></span>
@@ -139,7 +255,7 @@ const Home = () => {
                 </div>
               </div>
               <a 
-                href="https://zosterix.com" 
+                href="https://zosterix.phaenicio.com/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="mt-6 px-6 py-3 bg-slate-900 text-white rounded-lg font-semibold hover:bg-black transition-colors w-fit text-sm"
@@ -148,7 +264,6 @@ const Home = () => {
               </a>
             </div>
 
-            {/* Interactive Sidebar Node representation */}
             <div className="col-span-5 max-lg:col-span-12 premium-card p-8 bg-slate-50 flex flex-col justify-between overflow-hidden relative">
               <div className="absolute -top-12 -right-12 w-48 h-48 bg-accent/5 rounded-full blur-2xl"></div>
               
@@ -181,7 +296,6 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Three Feature Cards with Custom Premium Mockups */}
           <div className="grid grid-cols-3 gap-6 max-md:grid-cols-1">
             {[
               { 
@@ -227,7 +341,6 @@ const Home = () => {
                       <span className="text-[10px] text-text-muted font-bold">Citation Growth</span>
                       <span className="text-[9px] font-mono text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded font-bold">+18.4%</span>
                     </div>
-                    {/* SVG Line Sparkline */}
                     <svg className="w-full h-10 text-accent" viewBox="0 0 100 40">
                       <path d="M0,35 Q15,20 30,28 T60,10 T90,5 L100,5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                       <path d="M0,35 Q15,20 30,28 T60,10 T90,5 L100,5 L100,40 L0,40 Z" fill="rgba(59,130,246,0.05)" />
@@ -299,7 +412,6 @@ const Home = () => {
           </div>
           
           <div className="col-span-5 max-lg:hidden">
-            {/* Visual illustration box using HTML layout instead of flat illustration file */}
             <div className="premium-card p-8 bg-slate-50 border border-slate-200 shadow-premium flex flex-col gap-4">
               <div className="flex items-center gap-3 border-b border-slate-200 pb-4">
                 <FiGrid className="text-xl text-accent" />
