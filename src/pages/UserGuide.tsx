@@ -1,4 +1,5 @@
-import { FiBook, FiUser, FiGlobe, FiShare2, FiZap } from 'react-icons/fi';
+import { useState, useEffect } from 'react';
+import { FiBook, FiUser, FiGlobe, FiShare2, FiZap, FiArrowRight } from 'react-icons/fi';
 
 const UserGuide = () => {
   const sections = [
@@ -9,105 +10,275 @@ const UserGuide = () => {
     { id: 'advanced', title: 'Advanced Tools', icon: <FiZap /> },
   ];
 
+  const [activeSection, setActiveSection] = useState('getting-started');
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -60% 0px',
+      threshold: 0,
+    };
+
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, observerOptions);
+
+    sections.forEach((sec) => {
+      const el = document.getElementById(sec.id);
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      sections.forEach((sec) => {
+        const el = document.getElementById(sec.id);
+        if (el) observer.unobserve(el);
+      });
+    };
+  }, []);
+
   return (
-    <div className="page-shell max-w-7xl grid grid-cols-1 md:grid-cols-[240px_1fr] gap-12 fade-in">
-      <aside className="sticky top-28 h-fit hidden md:block text-left">
-        <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-text-h/50 mb-5">On This Page</h3>
-        <nav className="flex flex-col gap-1">
-          {sections.map((section) => (
-            <a 
-              key={section.id} 
-              href={`#${section.id}`} 
-              className="group flex items-center gap-3 py-2.5 px-3.5 border-l-2 border-transparent text-text hover:text-text-h hover:border-primary/40 hover:bg-primary/5 transition-all text-sm font-medium rounded-r-lg"
-            >
-              <span className="text-lg opacity-40 group-hover:opacity-100 group-hover:text-primary transition-all">{section.icon}</span>
-              {section.title}
-            </a>
-          ))}
-        </nav>
-      </aside>
+    <div className="flex flex-col fade-in pt-[78px] bg-white min-h-screen">
+      
+      {/* Shared Animations & Patterns */}
+      <style>{`
+        .hero-grid {
+          background-image: linear-gradient(to right, rgb(226 232 240 / 0.6) 1px, transparent 1px), 
+                            linear-gradient(to bottom, rgb(226 232 240 / 0.6) 1px, transparent 1px);
+          background-size: 56px 56px;
+          mask-image: radial-gradient(circle at 50% 10%, black, transparent 80%);
+          -webkit-mask-image: radial-gradient(circle at 50% 10%, black, transparent 80%);
+        }
+      `}</style>
 
-      <main className="text-left w-full max-w-4xl">
-        <header className="relative surface-panel p-12 max-md:p-7 rounded-[30px] grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-8 items-center mb-16 overflow-hidden">
-          <div className="relative z-10">
-            <div className="badge">Phaenicio User Guide</div>
-            <h1 className="text-5xl leading-tight mb-5 max-md:text-4xl">Zosterix <br /> <span className="text-primary">Documentation.</span></h1>
-            <p className="text-lg text-text/80 max-w-md leading-relaxed font-medium">
-              Everything you need to master the global research networking ecosystem.
+      {/* Hero Header */}
+      <header className="relative pt-20 pb-16 px-[5%] overflow-hidden border-b border-slate-200 bg-slate-50">
+        <div className="absolute inset-0 pointer-events-none hero-grid z-0"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-[60%] bg-gradient-to-b from-accent/5 to-transparent blur-3xl pointer-events-none"></div>
+
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-800 mb-6 uppercase tracking-wider shadow-sm">
+            Phaenicio User Guide
+          </div>
+          
+          <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-6 text-slate-950 text-balance">
+            Zosterix <br className="hidden sm:block" /> 
+            <span className="bg-gradient-to-r from-accent via-indigo-600 to-primary bg-clip-text text-transparent">
+              System Documentation.
+            </span>
+          </h1>
+          
+          <p className="text-base md:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto text-pretty">
+            A comprehensive guide to establishing peer profiles, configuring secure computing environments, and utilizing analytics tools within the Zosterix Research Grid.
+          </p>
+        </div>
+      </header>
+
+      {/* Main Layout Grid */}
+      <div className="max-w-7xl mx-auto px-[5%] py-16 w-full grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-16 items-start">
+        
+        {/* ScrollSpy Navigation Sidebar */}
+        <aside className="sticky top-28 h-fit hidden lg:block text-left">
+          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm">
+            <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-4 font-mono flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-slate-400 rounded-full"></span>
+              Directory Setup
+            </h3>
+            <nav className="flex flex-col relative">
+              {/* Active Indicator Line */}
+              <div 
+                className="absolute left-0 w-[2px] bg-accent transition-all duration-300 ease-out rounded-full"
+                style={{
+                  top: `${sections.findIndex(s => s.id === activeSection) * 44}px`,
+                  height: '40px',
+                  marginTop: '2px'
+                }}
+              />
+              
+              {sections.map((section) => {
+                const isActive = activeSection === section.id;
+                return (
+                  <a 
+                    key={section.id} 
+                    href={`#${section.id}`} 
+                    className={`group flex items-center gap-3 py-2.5 px-4 rounded-lg transition-all text-sm font-semibold h-[44px]
+                      ${isActive 
+                        ? 'text-accent bg-white shadow-sm border border-slate-100 ml-2' 
+                        : 'text-slate-600 hover:text-slate-950 hover:bg-slate-100/50 border border-transparent'}`}
+                  >
+                    <span className={`text-[15px] transition-colors ${isActive ? 'text-accent' : 'text-slate-400 group-hover:text-slate-600'}`}>
+                      {section.icon}
+                    </span>
+                    <span>{section.title}</span>
+                  </a>
+                );
+              })}
+            </nav>
+          </div>
+        </aside>
+
+        {/* Main Documentation Flow */}
+        <main className="text-left w-full max-w-3xl">
+          
+          {/* Section 1 */}
+          <section id="getting-started" className="mb-20 scroll-mt-32 group">
+            <div className="flex items-center gap-4 mb-6 pb-4 border-b border-slate-200">
+              <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-accent text-lg">
+                <FiBook />
+              </div>
+              <h2 className="text-2xl font-bold tracking-tight text-slate-950">Getting Started</h2>
+            </div>
+            
+            <p className="text-[15px] text-slate-600 leading-relaxed mb-8">
+              Welcome to Zosterix. This guide will walk you through the key operations of the research ecosystem, ensuring complete integrity, peer-to-peer security, and metadata alignment.
             </p>
-          </div>
-          <div className="hidden lg:flex justify-center opacity-20">
-             <div className="w-56 h-56 bg-primary/60 blur-[70px] rounded-full"></div>
-          </div>
-        </header>
+            
+            <div className="p-8 rounded-[1.5rem] bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-accent/30 transition-all duration-300">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="inline-flex items-center justify-center w-7 h-7 bg-slate-950 text-white rounded-lg text-xs font-bold font-mono tracking-tighter">01</span>
+                <h3 className="text-lg font-bold text-slate-950">Initial Access</h3>
+              </div>
+              <p className="text-[15px] text-slate-600 leading-relaxed mb-5">
+                Open the grid portal via the secure web gateway or redirect directly from your institutional single-sign-on (SSO) client portal.
+              </p>
+              <a 
+                href="https://zosterix.phaenicio.com/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="inline-flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold text-accent hover:bg-white hover:border-accent/30 transition-all group/link"
+              >
+                <span>Launch zosterix.phaenicio.com</span>
+                <FiArrowRight className="group-hover/link:translate-x-1 transition-transform" />
+              </a>
+            </div>
+          </section>
 
-        <section id="getting-started" className="mb-16 scroll-mt-32">
-          <h2 className="text-3xl font-semibold mb-6 border-b border-border pb-4">Getting Started</h2>
-          <p className="text-base text-text leading-relaxed mb-7 italic">
-            Welcome to Zosterix. This guide will help you navigate the platform and maximize your impact within the global research community.
-          </p>
-          <div className="surface-panel p-8 rounded-[24px] mb-6 hover:-translate-y-0.5 group">
-            <span className="inline-block px-3 py-1 bg-primary text-white rounded-lg text-xs font-semibold mb-5 shadow-lg shadow-primary/20 transition-transform group-hover:scale-105">1</span>
-            <h3 className="text-xl font-semibold mb-3">Initial Access</h3>
-            <p className="text-text leading-relaxed">Access Zosterix through the official web portal at zosterix.com or via the Phaenicio ecosystem dashboard.</p>
-          </div>
-        </section>
+          {/* Section 2 */}
+          <section id="profile-setup" className="mb-20 scroll-mt-32 group">
+            <div className="flex items-center gap-4 mb-6 pb-4 border-b border-slate-200">
+              <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-accent text-lg">
+                <FiUser />
+              </div>
+              <h2 className="text-2xl font-bold tracking-tight text-slate-950">Profile Setup</h2>
+            </div>
 
-        <section id="profile-setup" className="mb-16 scroll-mt-32">
-          <h2 className="text-3xl font-semibold mb-6 border-b border-border pb-4">Profile Setup</h2>
-          <p className="text-base text-text leading-relaxed mb-7 italic">
-            Your profile is your academic identity. A complete profile increases your visibility to potential collaborators and supervisors.
-          </p>
-          <div className="surface-panel p-8 rounded-[24px] mb-6 hover:-translate-y-0.5 group">
-            <span className="inline-block px-3 py-1 bg-primary text-white rounded-lg text-xs font-semibold mb-5 shadow-lg shadow-primary/20 transition-transform group-hover:scale-105">2</span>
-            <h3 className="text-xl font-semibold mb-3">Identity Verification</h3>
-            <p className="text-text leading-relaxed">Connect your institutional email or ORCID iD to verify your academic status and pull in existing publication data.</p>
-          </div>
-          <div className="surface-panel p-8 rounded-[24px] mb-6 hover:-translate-y-0.5 group border-dashed border-primary/20">
-            <span className="inline-block px-3 py-1 bg-primary text-white rounded-lg text-xs font-semibold mb-5 shadow-lg shadow-primary/20 transition-transform group-hover:scale-105">3</span>
-            <h3 className="text-xl font-semibold mb-3 text-text-h">Expertise Tags</h3>
-            <p className="text-text leading-relaxed">Add specific research tags to help our AI engine match you with relevant mentorship and collaboration opportunities.</p>
-          </div>
-        </section>
+            <p className="text-[15px] text-slate-600 leading-relaxed mb-8">
+              Your profile acts as your peer identity ledger. Ensuring verified tags increases your matching velocity for supervisors and cross-border research grants.
+            </p>
+            
+            <div className="space-y-5">
+              <div className="p-8 rounded-[1.5rem] bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-accent/30 transition-all duration-300">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="inline-flex items-center justify-center w-7 h-7 bg-slate-950 text-white rounded-lg text-xs font-bold font-mono tracking-tighter">02</span>
+                  <h3 className="text-lg font-bold text-slate-950">Identity Ledger Synchronization</h3>
+                </div>
+                <p className="text-[15px] text-slate-600 leading-relaxed">
+                  Connect your unique ORCID iD and verified institutional email. Our synchronization node will pull your existing publications, citations, and journal history automatically.
+                </p>
+              </div>
 
-        <section id="networking" className="mb-16 scroll-mt-32">
-          <h2 className="text-3xl font-semibold mb-6 border-b border-border pb-4 text-text-h">Research Networking</h2>
-          <p className="text-base text-text leading-relaxed mb-7 italic">
-            Zosterix matches you with researchers across institutional boundaries based on shared expertise and research goals.
-          </p>
-          <div className="surface-panel p-8 rounded-[24px] mb-6 hover:-translate-y-0.5 group">
-            <span className="inline-block px-3 py-1 bg-primary text-white rounded-lg text-xs font-semibold mb-5 shadow-lg shadow-primary/20 transition-transform group-hover:scale-105">4</span>
-            <h3 className="text-xl font-semibold mb-3 text-text-h">Discover Mentors</h3>
-            <p className="text-text leading-relaxed font-medium">Browse through the supervisor directory or let our AI suggest mentors who align with your current research trajectory.</p>
-          </div>
-        </section>
+              <div className="p-8 rounded-[1.5rem] bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-accent/30 transition-all duration-300">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="inline-flex items-center justify-center w-7 h-7 bg-slate-950 text-white rounded-lg text-xs font-bold font-mono tracking-tighter">03</span>
+                  <h3 className="text-lg font-bold text-slate-950">Domain Tagging</h3>
+                </div>
+                <p className="text-[15px] text-slate-600 leading-relaxed">
+                  Select precise scientific tags (e.g., <span className="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded text-slate-700">Quantum_Entanglement</span>, <span className="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded text-slate-700">Semantic_Parsing</span>). The matching orchestration engine parses these nodes to suggest peer mentors.
+                </p>
+              </div>
+            </div>
+          </section>
 
-        <section id="sharing" className="mb-16 scroll-mt-32">
-          <h2 className="text-3xl font-semibold mb-6 border-b border-border pb-4 text-text-h">Knowledge Sharing</h2>
-          <p className="text-base text-text leading-relaxed mb-7 italic">
-            Communicate your findings effectively through the integrated blogging and discussion platform.
-          </p>
-          <div className="surface-panel p-8 rounded-[24px] mb-6 hover:-translate-y-0.5 group shadow-[0_20px_50px_rgba(30,58,138,0.05)] border-primary/10">
-             <span className="inline-block px-3 py-1 bg-primary text-white rounded-lg text-xs font-semibold mb-5 shadow-lg shadow-primary/20 transition-transform group-hover:scale-105">5</span>
-            <h3 className="text-xl font-semibold mb-3 text-text-h">Academic Blogs</h3>
-            <p className="text-text leading-relaxed">Publish long-form research updates, methodologies, or meta-analyses that are searchable within the entire ecosystem.</p>
-          </div>
-        </section>
+          {/* Section 3 */}
+          <section id="networking" className="mb-20 scroll-mt-32 group">
+            <div className="flex items-center gap-4 mb-6 pb-4 border-b border-slate-200">
+              <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-accent text-lg">
+                <FiGlobe />
+              </div>
+              <h2 className="text-2xl font-bold tracking-tight text-slate-950">Research Networking</h2>
+            </div>
 
-        <section id="advanced" className="mb-24 scroll-mt-32">
-          <h2 className="text-3xl font-semibold mb-6 border-b border-border pb-4 text-text-h">Advanced Tools</h2>
-          <p className="text-base text-text leading-relaxed mb-7 italic">
-            Leverage Phaenicio's core AI intelligence to validate data and analyze research trends.
-          </p>
-          <div className="surface-panel p-8 rounded-[24px] mb-6 hover:-translate-y-0.5 group">
-             <span className="inline-block px-3 py-1 bg-primary text-white rounded-lg text-xs font-semibold mb-5 shadow-lg shadow-primary/20 transition-transform group-hover:scale-105">6</span>
-            <h3 className="text-xl font-semibold mb-3 text-text-h">Validation Engine</h3>
-            <p className="text-text leading-relaxed">Submit your datasets or methodologies to the AI-powered validation tool for sanity checks and bias detection.</p>
-          </div>
-        </section>
+            <p className="text-[15px] text-slate-600 leading-relaxed mb-8">
+              Zosterix bridges isolated institutional silos, introducing a direct communication channel for international academic workflows.
+            </p>
+            
+            <div className="p-8 rounded-[1.5rem] bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-accent/30 transition-all duration-300">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="inline-flex items-center justify-center w-7 h-7 bg-slate-950 text-white rounded-lg text-xs font-bold font-mono tracking-tighter">04</span>
+                <h3 className="text-lg font-bold text-slate-950">Mentor Discovery</h3>
+              </div>
+              <p className="text-[15px] text-slate-600 leading-relaxed">
+                Browse verified supervisor directories, select communication modes, and send structured engagement proposals containing research abstracts and methodology files.
+              </p>
+            </div>
+          </section>
 
-          {/* Global footer will be rendered by App.tsx */}
+          {/* Section 4 */}
+          <section id="sharing" className="mb-20 scroll-mt-32 group">
+            <div className="flex items-center gap-4 mb-6 pb-4 border-b border-slate-200">
+              <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-accent text-lg">
+                <FiShare2 />
+              </div>
+              <h2 className="text-2xl font-bold tracking-tight text-slate-950">Knowledge Sharing</h2>
+            </div>
+
+            <p className="text-[15px] text-slate-600 leading-relaxed mb-8">
+              Share findings, methodologies, and preprint reviews. Our publication nodes are optimized for indexing across standard scientific indexes.
+            </p>
+            
+            <div className="p-8 rounded-[1.5rem] bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-accent/30 transition-all duration-300">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="inline-flex items-center justify-center w-7 h-7 bg-slate-950 text-white rounded-lg text-xs font-bold font-mono tracking-tighter">05</span>
+                <h3 className="text-lg font-bold text-slate-950">Preprint Publications</h3>
+              </div>
+              <p className="text-[15px] text-slate-600 leading-relaxed">
+                Create structured research logs or write comprehensive methodological reviews. Publications are discoverable across all regional gateways.
+              </p>
+            </div>
+          </section>
+
+          {/* Section 5 */}
+          <section id="advanced" className="mb-12 scroll-mt-32 group">
+            <div className="flex items-center gap-4 mb-6 pb-4 border-b border-slate-200">
+              <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-accent text-lg">
+                <FiZap />
+              </div>
+              <h2 className="text-2xl font-bold tracking-tight text-slate-950">Advanced Tools</h2>
+            </div>
+
+            <p className="text-[15px] text-slate-600 leading-relaxed mb-8">
+              Leverage Phaenicio's computing grid logic to validate integrity indexes and bias factors directly within your drafts.
+            </p>
+            
+            <div className="p-8 rounded-[1.5rem] bg-slate-950 border border-slate-800 shadow-xl relative overflow-hidden">
+              {/* Dark mode card for advanced tools */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-accent/20 blur-3xl pointer-events-none"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="inline-flex items-center justify-center w-7 h-7 bg-accent/20 text-accent border border-accent/30 rounded-lg text-xs font-bold font-mono tracking-tighter">06</span>
+                  <h3 className="text-lg font-bold text-white">AI-Powered Validation Scan</h3>
+                </div>
+                <p className="text-[15px] text-slate-400 leading-relaxed mb-5">
+                  Submit data columns or textual methods drafts to the validation gateway. The algorithm tests for structure format errors, anomaly spikes, and citation gaps.
+                </p>
+                <div className="w-full bg-slate-900 rounded-lg p-3 font-mono text-[10px] text-slate-300 border border-slate-800 flex flex-col gap-1">
+                   <p className="text-accent">&gt; init validation_scan --target "methodology_v2.pdf"</p>
+                   <p className="text-slate-500">Scanning structure... OK</p>
+                   <p className="text-slate-500">Verifying citations... OK</p>
+                   <p className="text-emerald-400">&gt; Process complete. Integrity Index: 98.2%</p>
+                </div>
+              </div>
+            </div>
+          </section>
+          
         </main>
+      </div>
     </div>
   );
 };
