@@ -1,156 +1,117 @@
-import { Link } from 'react-router-dom';
-import { FiGlobe, FiDatabase, FiSearch, FiLayers, FiArrowRight } from 'react-icons/fi';
+import { FiGlobe, FiCpu, FiShield, FiUsers, FiLock, FiDatabase, FiArrowRight } from 'react-icons/fi';
+import { Card } from '../components/patterns/Card';
+import servicesRegistryLog from '../assets/services-registry-log.png';
 
 const Services = () => {
-  const services = [
+  const capabilities = [
     {
-      id: 'zosterix',
-      title: 'Zosterix Research Grid',
-      badge: 'Flagship Platform',
-      isFlagship: true,
-      icon: <FiGlobe />,
-      description: 'Our flagship global research networking platform. Enables students, researchers, and supervisors to verify academic identities, publish research journals/blogs, seek mentorship, and collaborate through secure discussion structures.',
-      link: 'https://zosterix.phaenicio.com/',
-      isExternal: true,
-      actionText: 'Access Zosterix Grid'
+      icon: <FiGlobe size={20} />,
+      title: "Academic Identity Registry",
+      text: "Integrates ORCID authentication protocols to verify peer identities and maintain clean author credentials across research environments."
     },
     {
-      id: 'compute',
-      title: 'Compute Nodes & Cloud Grid',
-      badge: 'High-Performance Computing',
-      isFlagship: false,
-      icon: <FiDatabase />,
-      description: 'Distributed high-performance computing clusters tailored for scientific simulations, dataset modeling, and advanced data rendering. Optimized for research teams working with large-scale data pipelines.',
-      link: '/contact',
-      isExternal: false,
-      actionText: 'Request Node Access'
+      icon: <FiUsers size={20} />,
+      title: "Supervisor Portals",
+      text: "Secures communication pipelines between students and academic supervisors, facilitating organized draft review cycles."
     },
     {
-      id: 'indexing',
-      title: 'AI Academic Indexing & Semantic Search',
-      badge: 'Information Orchestration',
-      isFlagship: false,
-      icon: <FiSearch />,
-      description: 'Next-generation semantic indexing that connects institutional knowledge, preprints, and research blogs across border silos, enabling fast discovery of relevant work and expertise tags.',
-      link: '/contact',
-      isExternal: false,
-      actionText: 'Request Integration'
+      icon: <FiLock size={20} />,
+      title: "Cryptographic Sealing",
+      text: "Locks preprint metadata and citation indexes in immutable registries, protecting research from early disclosure or alterations."
     },
     {
-      id: 'consulting',
-      title: 'Cross-Border Architecture Consulting',
-      badge: 'Specialized Systems',
-      isFlagship: false,
-      icon: <FiLayers />,
-      description: 'Bespoke systems architecting and technical advisory for universities and research departments. We help design secure, compliant cross-border data vaults and grant submission pipelines.',
-      link: '/contact',
-      isExternal: false,
-      actionText: 'Consult with Founders'
+      icon: <FiCpu size={20} />,
+      title: "Federated Registry Indexes",
+      text: "Partitions and routes directory searches across regional networks, balancing the indexing lookup load dynamically."
+    },
+    {
+      icon: <FiDatabase size={20} />,
+      title: "Sovereign Storage",
+      text: "Allows universities to maintain complete database ownership locally while advertising indexing trees on the shared network."
+    },
+    {
+      icon: <FiShield size={20} />,
+      title: "Secure Data Tunnels",
+      text: "Implements TLS 1.3 and end-to-end encryption for large dataset uploads, preventing packet inspections."
     }
   ];
 
   return (
-    <div className="flex flex-col fade-in pt-[78px] bg-white min-h-screen">
+    <div className="flex flex-col animate-in fade-in duration-700 pt-[140px] pb-20 bg-transparent relative text-left">
       
-      {/* Shared Animations */}
-      <style>{`
-        @keyframes pulse-dot {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.5; transform: scale(1.5); }
-        }
-        .animate-pulse-dot {
-          animation: pulse-dot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        .hero-grid {
-          background-image: linear-gradient(to right, rgb(226 232 240 / 0.6) 1px, transparent 1px), 
-                            linear-gradient(to bottom, rgb(226 232 240 / 0.6) 1px, transparent 1px);
-          background-size: 56px 56px;
-          mask-image: radial-gradient(circle at 50% 10%, black, transparent 80%);
-          -webkit-mask-image: radial-gradient(circle at 50% 10%, black, transparent 80%);
-        }
-      `}</style>
-
-      {/* Hero Section */}
-      <header className="relative pt-20 pb-24 px-[5%] overflow-hidden border-b border-slate-200">
-        <div className="absolute inset-0 pointer-events-none hero-grid z-0"></div>
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-[60%] bg-gradient-to-b from-accent/5 to-transparent blur-3xl pointer-events-none"></div>
-
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-800 mb-6 uppercase tracking-wider">
-            Phaenicio Ecosystem
+      {/* Top Section: Double Column Showcase (Mirrors About.tsx structure) */}
+      <section className="relative w-full px-6 py-12 md:py-20 max-w-6xl mx-auto">
+        <div className="grid w-full items-center gap-12 md:grid-cols-[0.95fr_1.05fr]">
+          
+          {/* Left Column: Overlapping Visual Registry Console Block */}
+          <div className="relative order-2 md:order-1">
+            <div className="relative rounded-[2rem] overflow-hidden border border-slate-200 bg-[#130A0A] p-2 shadow-xl">
+              <img 
+                src={servicesRegistryLog} 
+                alt="Registry Logs Monitored" 
+                className="w-full h-auto rounded-[1.6rem] object-cover"
+              />
+            </div>
+            
+            <div className="absolute -bottom-5 left-5 right-5 rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-xl backdrop-blur sm:left-auto sm:w-72">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wider text-slate-500 font-mono">Platform State</p>
+                <p className="mt-1 text-sm font-bold text-slate-950">Zosterix Core / v1.4.2-stable</p>
+              </div>
+            </div>
           </div>
-          
-          <h1 className="font-display text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.08] mb-6 text-slate-950 text-balance">
-            Our Services <br className="hidden sm:block" /> 
-            <span className="text-slate-400">& Platforms</span>
-          </h1>
-          
-          <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto text-pretty">
-            Purpose-built digital infrastructure, compute grids, and intelligence layers for scientific and academic communities.
-          </p>
+
+          {/* Right Column: Platform Description */}
+          <div className="order-1 flex flex-col gap-6 md:order-2">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-500 font-mono">Phaenicio Ecosystem</p>
+            <h2 className="max-w-2xl text-4xl font-extrabold tracking-tight text-slate-950 sm:text-5xl md:text-6xl leading-[1.02] font-display">
+              Specialized registries & compute for research.
+            </h2>
+            <p className="max-w-2xl text-base leading-relaxed text-slate-655 font-normal">
+              Our flagship platform, Zosterix, serves as a secure collaboration network. We strip away administrative friction, securing dataset flows and metadata registries so researchers, students, and advisors can focus entirely on verified science.
+            </p>
+            
+            <div className="pt-2">
+              <a 
+                href="https://zosterix.phaenicio.com/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3.5 bg-slate-950 text-white rounded-full text-sm font-semibold transition hover:bg-brand-red group/link"
+              >
+                <span>Access Zosterix Grid</span>
+                <FiArrowRight className="group-hover/link:translate-x-1 transition-transform" />
+              </a>
+            </div>
+          </div>
+
         </div>
-      </header>
+      </section>
 
-      {/* Services Grid Section */}
-      <section className="py-20 px-[5%] bg-slate-50 flex-grow">
-        <div className="max-w-6xl mx-auto grid grid-cols-2 gap-6 max-lg:grid-cols-1 text-left">
-          {services.map((service) => (
-            <article 
-              key={service.id} 
-              className={`p-8 md:p-10 rounded-[2rem] border transition-all duration-300 flex flex-col justify-between group relative overflow-hidden ${
-                service.isFlagship 
-                  ? 'bg-white border-accent/20 shadow-md hover:shadow-xl hover:shadow-accent/5' 
-                  : 'bg-white border-slate-200 shadow-sm hover:shadow-md'
-              }`}
-            >
-              {/* Flagship Background Glow */}
-              {service.isFlagship && (
-                <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>
-              )}
+      {/* Structured Capabilities Grid (Mirrors Methodology Pillars on About.tsx) */}
+      <section className="py-20 px-6 md:px-12 bg-transparent relative border-t border-slate-200/40">
+        <div className="max-w-6xl mx-auto">
+          
+          <div className="mb-12 max-w-2xl">
+            <span className="text-xs font-bold uppercase tracking-widest text-brand-red font-mono block mb-2">Capabilities</span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight font-display">Infrastructure Features</h2>
+            <p className="text-sm text-slate-500 font-medium mt-2">Every protocol is designed to provide secure, frictionless academic collaboration.</p>
+          </div>
 
-              <div className="relative z-10">
-                <div className="flex justify-between items-start mb-8">
-                  <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-wider ${
-                    service.isFlagship ? 'bg-accent/10 text-accent border border-accent/20' : 'bg-slate-100 text-slate-600 border border-slate-200'
-                  }`}>
-                    {service.isFlagship && <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse-dot"></span>}
-                    {service.badge}
-                  </span>
-                  
-                  <span className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl transition-transform duration-300 group-hover:scale-110 ${
-                    service.isFlagship ? 'bg-accent text-white shadow-md shadow-accent/20' : 'bg-slate-50 text-slate-700 border border-slate-200'
-                  }`}>
-                    {service.icon}
-                  </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {capabilities.map((cap, i) => (
+              <Card 
+                key={i} 
+                variant="glass-light"
+                className="flex flex-col group p-6"
+              >
+                <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-brand-red mb-6 group-hover:bg-slate-950 group-hover:text-white transition-all duration-300">
+                  {cap.icon}
                 </div>
-                
-                <h2 className="text-2xl font-bold text-slate-950 mb-4 tracking-tight">{service.title}</h2>
-                <p className="text-sm md:text-base text-slate-600 leading-relaxed mb-8">{service.description}</p>
-              </div>
-
-              <div className="relative z-10 mt-auto pt-6 border-t border-slate-100">
-                {service.isExternal ? (
-                  <a 
-                    href={service.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-bold text-accent hover:text-indigo-600 transition-colors group/link"
-                  >
-                    <span>{service.actionText}</span>
-                    <FiArrowRight className="group-hover/link:translate-x-1 transition-transform" />
-                  </a>
-                ) : (
-                  <Link 
-                    to={service.link}
-                    className="inline-flex items-center gap-2 text-sm font-bold text-slate-700 hover:text-accent transition-colors group/link"
-                  >
-                    <span>{service.actionText}</span>
-                    <FiArrowRight className="group-hover/link:translate-x-1 transition-transform" />
-                  </Link>
-                )}
-              </div>
-            </article>
-          ))}
+                <h3 className="text-lg font-bold mb-3 text-slate-950 font-display">{cap.title}</h3>
+                <p className="text-sm text-slate-600 leading-relaxed flex-grow font-normal">{cap.text}</p>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
       

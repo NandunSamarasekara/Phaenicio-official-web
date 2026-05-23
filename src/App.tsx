@@ -5,16 +5,16 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Services from './pages/Services';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 
-
-import UserGuide from './pages/UserGuide';
 import { Features, Solutions, Pricing, Security, Blog, Community } from './pages/OtherPages';
-import ParticleBackground from './components/ParticleBackground';
+import { ScrollToTop } from './components/ScrollToTop';
 
 function App() {
   return (
     <Router>
-      <ParticleBackground />
+      <ScrollToTop />
       <Navbar />
       <main className="min-h-[calc(100vh-78px)]">
         <Routes>
@@ -22,7 +22,8 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/user-guide" element={<UserGuide />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="/features" element={<Features />} />
           <Route path="/solutions" element={<Solutions />} />
           <Route path="/pricing" element={<Pricing />} />
