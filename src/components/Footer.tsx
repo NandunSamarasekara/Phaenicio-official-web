@@ -20,14 +20,14 @@ const Footer = () => {
                 href="https://github.com/phaenicio" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="w-9 h-9 rounded-lg border border-slate-200 flex items-center justify-center text-text hover:text-accent hover:border-accent hover:bg-slate-50 transition-all"
+                className="w-9 h-9 rounded-lg border border-slate-200 flex items-center justify-center text-text hover:text-primary hover:border-primary hover:bg-slate-50 transition-all"
                 aria-label="GitHub"
               >
                 <FiGithub />
               </a>
               <Link 
                 to="/contact" 
-                className="w-9 h-9 rounded-lg border border-slate-200 flex items-center justify-center text-text hover:text-accent hover:border-accent hover:bg-slate-50 transition-all"
+                className="w-9 h-9 rounded-lg border border-slate-200 flex items-center justify-center text-text hover:text-primary hover:border-primary hover:bg-slate-50 transition-all"
                 aria-label="Contact Us"
               >
                 <FiMail />
@@ -39,25 +39,24 @@ const Footer = () => {
             <div className="flex flex-col">
               <h4 className="font-bold text-text-h mb-5 uppercase text-[11px] tracking-wider font-display opacity-80">Platform</h4>
               <ul className="flex flex-col gap-3">
-                <li><Link to="/features" className="text-text hover:text-accent transition-colors text-sm font-medium">Features</Link></li>
-                <li><Link to="/solutions" className="text-text hover:text-accent transition-colors text-sm font-medium">Solutions</Link></li>
-                <li><a href="https://zosterix.com" target="_blank" rel="noopener noreferrer" className="text-text hover:text-accent transition-colors text-sm font-medium">Zosterix Portal</a></li>
+                <li><Link to="/features" className="text-text hover:text-primary transition-colors text-sm font-medium">Features</Link></li>
+                <li><Link to="/solutions" className="text-text hover:text-primary transition-colors text-sm font-medium">Solutions</Link></li>
+                <li><a href="https://zosterix.phaenicio.com" target="_blank" rel="noopener noreferrer" className="text-text hover:text-primary transition-colors text-sm font-medium">Zosterix Portal</a></li>
               </ul>
             </div>
             <div className="flex flex-col">
               <h4 className="font-bold text-text-h mb-5 uppercase text-[11px] tracking-wider font-display opacity-80">Resources</h4>
               <ul className="flex flex-col gap-3">
-                <li><Link to="/user-guide" className="text-text hover:text-accent transition-colors text-sm font-medium">User Guide</Link></li>
-                <li><Link to="/blog" className="text-text hover:text-accent transition-colors text-sm font-medium">Blog</Link></li>
-                <li><Link to="/contact" className="text-text hover:text-accent transition-colors text-sm font-medium">Partnerships</Link></li>
+                <li><Link to="/blog" className="text-text hover:text-primary transition-colors text-sm font-medium">Blog</Link></li>
+                <li><Link to="/contact" className="text-text hover:text-primary transition-colors text-sm font-medium">Partnerships</Link></li>
               </ul>
             </div>
             <div className="flex flex-col max-sm:col-span-2">
               <h4 className="font-bold text-text-h mb-5 uppercase text-[11px] tracking-wider font-display opacity-80">Company</h4>
               <ul className="flex flex-col gap-3">
-                <li><Link to="/about" className="text-text hover:text-accent transition-colors text-sm font-medium">About Us</Link></li>
-                <li><Link to="/contact" className="text-text hover:text-accent transition-colors text-sm font-medium">Contact</Link></li>
-                <li><Link to="/security" className="text-text hover:text-accent transition-colors text-sm font-medium">Security</Link></li>
+                <li><Link to="/about" className="text-text hover:text-primary transition-colors text-sm font-medium">About Us</Link></li>
+                <li><Link to="/contact" className="text-text hover:text-primary transition-colors text-sm font-medium">Contact</Link></li>
+                <li><Link to="/security" className="text-text hover:text-primary transition-colors text-sm font-medium">Security</Link></li>
               </ul>
             </div>
           </div>
@@ -68,8 +67,8 @@ const Footer = () => {
             © {new Date().getFullYear()} Phaenicio. Engineered for scientific discovery.
           </div>
           <div className="flex gap-6">
-            <Link to="/privacy" className="hover:text-accent transition-colors">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-accent transition-colors">Terms of Service</Link>
+            <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>
